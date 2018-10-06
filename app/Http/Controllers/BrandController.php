@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
+use App\Brand;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $produtos = Product::all();
-        return view('products.index')->with('produtos', $produtos);
+        //
     }
 
     /**
@@ -25,7 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        //
     }
 
     /**
@@ -36,30 +35,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-
-        $validator = \Validator::make($dados, [
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'amount' => 'required|numeric',
-            'price' => 'required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
-
-        Product::create($dados);
-        return redirect()->route('produtos.index')->with(['sucesso' => 'Produto adicionado com sucesso!']);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Brand $brand)
     {
         //
     }
@@ -67,10 +52,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Brand $brand)
     {
         //
     }
@@ -79,10 +64,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Brand $brand)
     {
         //
     }
@@ -90,10 +75,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Brand $brand)
     {
         //
     }
