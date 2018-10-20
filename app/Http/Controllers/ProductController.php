@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $marcas = Brand::all();
+        return view('products.create')->with('marcas', $marcas);
     }
 
     /**
@@ -43,6 +45,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'amount' => 'required|numeric',
             'price' => 'required|numeric',
+            'brand_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -70,9 +73,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $produto = Product::find($id);
+        $marcas = Brand::all();
+        return view('products.edit')->with('produto', $produto)
+            ->with('marcas', $marcas);
     }
 
     /**
@@ -82,9 +88,18 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $produto = Product::find($id);
+        $produto->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'amount' => $request->amount,
+            'price' => $request->price,
+            'brand_id' => $request->brand_id,
+        ]);
+
+        return redirect()->route('produtos.index')->with(['success' => 'Produto alterado com sucesso!']);
     }
 
     /**

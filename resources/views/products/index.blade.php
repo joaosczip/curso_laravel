@@ -20,6 +20,8 @@
                     <th>Descrição</th>
                     <th>Quantidade</th>
                     <th>Preço</th>
+                    <th>Marca</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,10 @@
                 <td>{{ $produto->description }}</td>
                 <td>{{ $produto->amount }}</td>
                 <td>{{ $produto->price }}</td>
+                <td>{{ $produto->brand->name }}</td>
+                <td>
+                    <a class="btn btn-success" href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
+                </td>
             </tr>
             @endforeach
             </tbody>

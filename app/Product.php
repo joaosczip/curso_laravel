@@ -10,7 +10,8 @@ class Product extends Model
         'name',
         'description',
         'amount',
-        'price'
+        'price',
+        'brand_id'
     ];
 
     protected $table = 'products';
