@@ -108,8 +108,14 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $produto = Product::find($id);
+        try {
+            $produto->delete();
+            return redirect()->back()->with(['sucesso' => 'Produto apagado com sucesso!']);
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 }

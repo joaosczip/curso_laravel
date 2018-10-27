@@ -1,9 +1,9 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
         <h3>Lista de produtos</h3>
-        
+
         @if(session('sucesso'))
         <div class="alert alert-success">
             <p>{{ session('sucesso') }}</p>
@@ -34,7 +34,12 @@
                 <td>{{ $produto->price }}</td>
                 <td>{{ $produto->brand->name }}</td>
                 <td>
-                    <a class="btn btn-success" href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
+                    <form action="{{ route('produtos.destroy', $produto->id) }}" method="post">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <a class="btn btn-success" href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
+                        <input type="submit" value="Excluir" class="btn btn-danger">
+                    </form>
                 </td>
             </tr>
             @endforeach
