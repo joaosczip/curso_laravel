@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', '') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,13 +33,33 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if(Sentinel::check() && Sentinel::inRole('admin'))
+                        <li>
+                            <a class="nav-link" href="{{ route('user.create') }}">Cadastrar usuário</a>
+                        </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-
+                        @if(Sentinel::check())
+                            <form action="{{ route('logout') }}" method="POST" id="form-logout">
+                            @csrf
+                                <li>
+                                    <a class="nav-link" onclick="document.getElementById('form-logout').submit()" href="#">
+                                        Logout
+                                    </a>
+                                </li>
+                            </form>
+                        @else
+                            <li>
+                                <a class="nav-link" href="{{ route('login.form') }}">Login</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ route('register.form') }}">Registrar</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

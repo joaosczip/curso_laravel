@@ -12,7 +12,7 @@ class LoginController extends Controller
         return view('login.index');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $user = $request->all();
 
@@ -22,4 +22,11 @@ class LoginController extends Controller
 
         return redirect()->back();
     }
+
+    public function logout()
+    {
+        Sentinel::logout();
+        return redirect()->route('login.form');
+    }
+
 }

@@ -21,7 +21,9 @@
                     <th>Quantidade</th>
                     <th>Preço</th>
                     <th>Marca</th>
-                    <th>Ação</th>
+                    @if(Sentinel::inRole('admin'))
+                        <th>Ação</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -34,12 +36,14 @@
                 <td>{{ $produto->price }}</td>
                 <td>{{ $produto->brand->name }}</td>
                 <td>
+                    @if(Sentinel::inRole('admin'))
                     <form action="{{ route('produtos.destroy', $produto->id) }}" method="post">
                         @csrf
                         {{ method_field('DELETE') }}
                         <a class="btn btn-success" href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
                         <input type="submit" value="Excluir" class="btn btn-danger">
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach
