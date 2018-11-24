@@ -9,6 +9,11 @@
             @endforeach
         </div>
         @endif
+
+        <a class="btn btn-primary" href="{{ route('product.categories', $produto->id) }}">
+            Relacionar com categorias
+        </a>
+
         <div class="card">
             <div class="card-header">
                 Alterar produto
@@ -41,7 +46,7 @@
                                 $selected = ''
                             @endphp
                             @foreach($marcas as $marca)
-                            @if($marca->id == $produto->brand->id)
+                            @if($marca->id == $produto->brand_id)
                                 $selected = 'selected'
                                 <option {{$selected}} value="{{ $marca->id }}">{{ $marca->name }}</option>
                             @php $selected = '' @endphp
@@ -49,6 +54,16 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                    <label for="">Categorias</label>
+                        <ul>
+                            @foreach($produto->categories as $categoria)
+                                <li>{{ $categoria->name }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+
                     <div class="form-group">
                         <input type="submit" value="Alterar" class="btn btn-success btn-block">
                     </div>

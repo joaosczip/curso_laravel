@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class ProductController extends Controller
     public function index()
     {
         $produtos = Product::all();
-        return view('products.index')->with('produtos', $produtos);
+        dd($produtos);
+        //return view('products.index')->with('produtos', $produtos);
     }
 
     /**
@@ -27,7 +29,25 @@ class ProductController extends Controller
     public function create()
     {
         $marcas = Brand::all();
-        return view('products.create')->with('marcas', $marcas);
+        return view('products.create')->with('marcas', $marcas)
+            ->with('categorias', Category::all());
+    }
+
+    public function relacionaCategorias(int $id)
+    {
+        $produto = Product::find($id);
+        $categorias = Category::paginate(10);
+        return view('products.product-categories')
+            ->with('produto', $produto)
+            ->with('categorias', $categorias);
+    }
+
+    public function relacionarComCategorias(Request $request, int $id)
+    {
+        $produto = Product::find($id);
+        $categorias = Category::find($request->category_id);
+        $produto->categories()->attach($categorias);
+        return redirect()->route('produtos.index');
     }
 
     /**
@@ -76,9 +96,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $produto = Product::find($id);
-        $marcas = Brand::all();
-        return view('products.edit')->with('produto', $produto)
-            ->with('marcas', $marcas);
+        return $produto;
+        //$marcas = Brand::all();
+        //return view('products.edit')->with('produto', $produto)
+        //->with('marcas', $marcas);
     }
 
     /**
